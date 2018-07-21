@@ -1,0 +1,21 @@
+version: "3"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ["npm", "start"]
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - 9999:9999
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://eurorank@postgres/eurorank
+  postgres:
+    image: postgres:10.4-alpine
+    environment:
+      POSTGRES_USER: eurorank
+      POSTGRES_DB: eurorank
